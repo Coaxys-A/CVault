@@ -29,6 +29,7 @@ CVault is a private alternative to GitHub Gist. Snippets are shareable via secre
 | `/snippets/[id]` | Owner view — syntax highlight, copy, share, edit, delete |
 | `/snippets/[id]/edit` | Edit — pre-filled form |
 | `/s/[id]` | Shared — minimal chrome, password gate |
+| `/raw/[id]` | Raw plain-text output — 403 for password-protected, 404 if expired |
 
 ## Key Components
 | Component | File | Notes |
@@ -88,8 +89,158 @@ CVault is a private alternative to GitHub Gist. Snippets are shareable via secre
 - Check Redis: `redis-cli ping`
 - Inspect Redis CVault keys: `redis-cli --scan --pattern 'cvault:*'`
 
+## Deployment Guide
+
+### Prerequisites
+- Ubuntu/Debian server
+- Node.js 20+ (`node --version`)
+- npm 10+ (`npm --version`)
+- Redis (`apt install redis-server`)
+- Nginx (`apt install nginx`)
+- Certbot for SSL (`apt install certbot python3-certbot-nginx`)
+
+### 1. Transfer / Clone the Repo
+
+```bash
+# Option A — git clone (once you push to a remote)
+git clone <repo-url> /srv/CVault/vault
+
+# Option B — rsync from old server
+rsync -av --exclude='.next' --exclude='node_modules' --exclude='data/' \
+  user@old-server:/srv/CVault/vault/ /srv/CVault/vault/
+```
+
+### 2. Install Dependencies
+
+```bash
+cd /srv/CVault/vault
+npm ci                  # uses package-lock.json exactly — never npm install in production
+```
+
+### 3. Environment Variables
+
+Create `/etc/cvault.env` (owned by root, mode 600):
+
+```bash
+cat > /etc/cvault.env << 'EOF'
+CVAULT_SECRET=<generate: openssl rand -hex 32>
+CVAULT_SECURE_COOKIES=true
+REDIS_URL=redis://127.0.0.1:6379
+NODE_ENV=production
+EOF
+chmod 600 /etc/cvault.env
+```
+
+### 4. Build the App
+
+```bash
+cd /srv/CVault/vault
+npm run build
+```
+
+### 5. systemd Service
+
+Create `/etc/systemd/system/cvault.service`:
+
+```ini
+[Unit]
+Description=CVault Next.js application
+After=network.target redis.service
+Requires=redis.service
+
+[Service]
+Type=simple
+User=www-data
+WorkingDirectory=/srv/CVault/vault
+EnvironmentFile=/etc/cvault.env
+ExecStart=/usr/bin/npm start -- -H 127.0.0.1 -p 3005
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+```
+
+```bash
+systemctl daemon-reload
+systemctl enable cvault.service
+systemctl start cvault.service
+systemctl status cvault.service --no-pager -l
+```
+
+### 6. Nginx + SSL
+
+```bash
+# Obtain certificate first
+certbot certonly --nginx -d snp.coaxys.ir
+```
+
+Create `/etc/nginx/sites-available/cvault`:
+
+```nginx
+server {
+    listen 80;
+    server_name snp.coaxys.ir;
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    server_name snp.coaxys.ir;
+
+    ssl_certificate     /etc/letsencrypt/live/snp.coaxys.ir/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/snp.coaxys.ir/privkey.pem;
+    ssl_protocols       TLSv1.2 TLSv1.3;
+    ssl_ciphers         HIGH:!aNULL:!MD5;
+
+    client_max_body_size 2m;
+
+    location / {
+        proxy_pass         http://127.0.0.1:3005;
+        proxy_http_version 1.1;
+        proxy_set_header   Upgrade $http_upgrade;
+        proxy_set_header   Connection 'upgrade';
+        proxy_set_header   Host $host;
+        proxy_set_header   X-Real-IP $remote_addr;
+        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+```
+
+```bash
+ln -s /etc/nginx/sites-available/cvault /etc/nginx/sites-enabled/cvault
+nginx -t && systemctl reload nginx
+```
+
+### 7. Verify
+
+```bash
+curl -s https://snp.coaxys.ir/api/auth/me | jq .   # should return 401
+redis-cli ping                                        # PONG
+systemctl status cvault.service --no-pager -l
+```
+
+### 8. File Permissions
+
+```bash
+# App directory owned by www-data so the service can write data/db.json
+chown -R www-data:www-data /srv/CVault/vault
+chmod -R 755 /srv/CVault/vault
+chmod 700 /srv/CVault/vault/data        # restrict db access
+```
+
+### SSL Renewal (auto via systemd timer)
+
+```bash
+systemctl status certbot.timer          # should be active
+# Manual renewal test:
+certbot renew --dry-run
+```
+
 ## What's Done
-- Full frontend with all 6 routes
+- Full frontend with all routes
 - Code + Text snippet creation toggle
 - CodeMirror editor with 13 language extensions
 - Privacy toggle (secret link / password-protected)
@@ -103,10 +254,15 @@ CVault is a private alternative to GitHub Gist. Snippets are shareable via secre
 - Footer with Coaxys + arsamsabbagh.ir link
 - Responsive on mobile/tablet/desktop
 - Framer Motion animations (visible-then-animate pattern)
-- All fonts/resources served locally
+- All fonts/resources served locally (no CDN)
 - Production build + nginx proxy (HTTPS, snp.coaxys.ir)
 - systemd service enabled for boot
 - No demo account or demo snippets seeded in production
+- `/raw/[id]` plain-text endpoint for curl/scripts
+- CodeMirror theme selector — 6 themes, persisted to localStorage
+- Inline share URL bar with copy button on owner view
+- Live expiration countdown on cards, owner view, and shared view
+- `lib/expiry-format.ts` — shared expiry formatting utility
 
 ## Backend Status
 - Local username/password authentication with HTTP-only session cookie
