@@ -1,0 +1,17 @@
+{
+  "pages": {},
+  "app": {
+    "[project]/app/snippets/[id]/edit/page": [
+      "static/media/geist_400-s.p.0-l4_4nthugsp.woff2",
+      "static/media/geist_400_italic-s.p.0b5p-2kvrsurp.woff2",
+      "static/media/geist_500-s.p.0-qtl55x5-eny.woff2",
+      "static/media/geist_700-s.p.14hfgmmsxk2f3.woff2",
+      "static/media/geist_900-s.p.0m7w1ebs9mdi9.woff2",
+      "static/media/geist_mono_400-s.p.0_bur-~vrao9j.woff2",
+      "static/media/geist_mono_500-s.p.0g03sjtd14xz5.woff2",
+      "static/media/geist_mono_700-s.p.0a4po3gnwa7w8.woff2"
+    ]
+  },
+  "appUsingSizeAdjust": true,
+  "pagesUsingSizeAdjust": false
+}

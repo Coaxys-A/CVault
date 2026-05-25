@@ -1,0 +1,59 @@
+/* [project]/app/geistsans_60303bd1.module.css [app-client] (css) */
+@font-face {
+  font-family: geistSans;
+  src: url("../media/geist_400-s.p.0-l4_4nthugsp.woff2") format("woff2");
+  font-display: swap;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: geistSans;
+  src: url("../media/geist_400_italic-s.p.0b5p-2kvrsurp.woff2") format("woff2");
+  font-display: swap;
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: geistSans;
+  src: url("../media/geist_500-s.p.0-qtl55x5-eny.woff2") format("woff2");
+  font-display: swap;
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: geistSans;
+  src: url("../media/geist_700-s.p.14hfgmmsxk2f3.woff2") format("woff2");
+  font-display: swap;
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: geistSans;
+  src: url("../media/geist_900-s.p.0m7w1ebs9mdi9.woff2") format("woff2");
+  font-display: swap;
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: geistSans Fallback;
+  src: local(Arial);
+  ascent-override: 94.56%;
+  descent-override: 27.76%;
+  line-gap-override: 0.0%;
+  size-adjust: 106.28%;
+}
+
+.geistsans_60303bd1-module__YOSxsq__className {
+  font-family: geistSans, geistSans Fallback;
+}
+
+.geistsans_60303bd1-module__YOSxsq__variable {
+  --font-geist-sans: "geistSans", "geistSans Fallback";
+}
+
+/*# sourceMappingURL=app_geistsans_60303bd1_module_css_0w3-wzy._.single.css.map*/

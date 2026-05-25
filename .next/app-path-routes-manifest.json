@@ -1,0 +1,23 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/api/auth/captcha/route": "/api/auth/captcha",
+  "/api/auth/login/route": "/api/auth/login",
+  "/api/auth/logout/route": "/api/auth/logout",
+  "/api/auth/me/route": "/api/auth/me",
+  "/api/auth/register/route": "/api/auth/register",
+  "/api/share/[id]/route": "/api/share/[id]",
+  "/api/share/[id]/unlock/route": "/api/share/[id]/unlock",
+  "/api/snippets/[id]/route": "/api/snippets/[id]",
+  "/api/snippets/route": "/api/snippets",
+  "/favicon.ico/route": "/favicon.ico",
+  "/login/page": "/login",
+  "/page": "/",
+  "/raw/[id]/route": "/raw/[id]",
+  "/register/page": "/register",
+  "/s/[id]/page": "/s/[id]",
+  "/snippets/[id]/edit/page": "/snippets/[id]/edit",
+  "/snippets/[id]/page": "/snippets/[id]",
+  "/snippets/new/page": "/snippets/new",
+  "/snippets/page": "/snippets"
+}

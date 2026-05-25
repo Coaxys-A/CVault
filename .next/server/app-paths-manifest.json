@@ -1,0 +1,23 @@
+{
+  "/_global-error/page": "app/_global-error/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/api/auth/captcha/route": "app/api/auth/captcha/route.js",
+  "/api/auth/login/route": "app/api/auth/login/route.js",
+  "/api/auth/logout/route": "app/api/auth/logout/route.js",
+  "/api/auth/me/route": "app/api/auth/me/route.js",
+  "/api/auth/register/route": "app/api/auth/register/route.js",
+  "/api/share/[id]/route": "app/api/share/[id]/route.js",
+  "/api/share/[id]/unlock/route": "app/api/share/[id]/unlock/route.js",
+  "/api/snippets/[id]/route": "app/api/snippets/[id]/route.js",
+  "/api/snippets/route": "app/api/snippets/route.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/login/page": "app/login/page.js",
+  "/page": "app/page.js",
+  "/raw/[id]/route": "app/raw/[id]/route.js",
+  "/register/page": "app/register/page.js",
+  "/s/[id]/page": "app/s/[id]/page.js",
+  "/snippets/[id]/edit/page": "app/snippets/[id]/edit/page.js",
+  "/snippets/[id]/page": "app/snippets/[id]/page.js",
+  "/snippets/new/page": "app/snippets/new/page.js",
+  "/snippets/page": "app/snippets/page.js"
+}

@@ -1,0 +1,43 @@
+/* [project]/app/geistmono_2ed4fe44.module.css [app-client] (css) */
+@font-face {
+  font-family: geistMono;
+  src: url("../media/geist_mono_400-s.p.0_bur-~vrao9j.woff2") format("woff2");
+  font-display: swap;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: geistMono;
+  src: url("../media/geist_mono_500-s.p.0g03sjtd14xz5.woff2") format("woff2");
+  font-display: swap;
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: geistMono;
+  src: url("../media/geist_mono_700-s.p.0a4po3gnwa7w8.woff2") format("woff2");
+  font-display: swap;
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: geistMono Fallback;
+  src: local(Arial);
+  ascent-override: 76.43%;
+  descent-override: 22.43%;
+  line-gap-override: 0.0%;
+  size-adjust: 131.49%;
+}
+
+.geistmono_2ed4fe44-module__VQY_kG__className {
+  font-family: geistMono, geistMono Fallback;
+}
+
+.geistmono_2ed4fe44-module__VQY_kG__variable {
+  --font-geist-mono: "geistMono", "geistMono Fallback";
+}
+
+/*# sourceMappingURL=app_geistmono_2ed4fe44_module_css_0w3-wzy._.single.css.map*/

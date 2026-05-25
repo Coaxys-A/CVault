@@ -1,0 +1,26 @@
+{
+  "users": [
+    {
+      "id": "cbb91fc3-fca7-40de-82b6-bf53aa3e958f",
+      "username": "arsam",
+      "name": "Coaxyw",
+      "passwordHash": "210000:1458b882083631af6344403290d386e9:0823e2cee7493fdf3eea359875854d3f98c2cf39ab191d91c475f97f2431255e",
+      "createdAt": "2026-05-25T12:56:31.696Z"
+    }
+  ],
+  "snippets": [
+    {
+      "id": "57f1adc86358",
+      "ownerId": "cbb91fc3-fca7-40de-82b6-bf53aa3e958f",
+      "title": "TEST",
+      "code": "Hello",
+      "language": "plaintext",
+      "privacy": "secret",
+      "expiration": "never",
+      "expiresAt": null,
+      "tags": [],
+      "createdAt": "2026-05-25T12:56:53.018Z",
+      "updatedAt": "2026-05-25T12:56:53.018Z"
+    }
+  ]
+}
